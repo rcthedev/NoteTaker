@@ -28,7 +28,7 @@ app.get("/notes", function (req, res) {
 // Will respond to GET note request ///////////////////////////////////////////////////////////////////
 app.get("/api/notes", function (req, res) {
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function (error, data) {
+    fs.readFile(path.join(__dirname, "/db/db.json"), function (error, data) {
         if (error) {
            return console.log(error);
         };
@@ -43,7 +43,7 @@ app.post("/api/notes", function (req, res) {
 
     let newNote = req.body;
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function (error, data) {
+    fs.readFile(path.join(__dirname, "/db/db.json"), function (error, data) {
         if (error) {
             return console.log(error);
         };
@@ -84,7 +84,7 @@ app.post("/api/notes", function (req, res) {
 app.delete("/api/notes/:id", function (req, res) {
     let noteToDelete = req.params.id;
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function (error, data) {
+    fs.readFile(path.join(__dirname, "/db/db.json"), function (error, data) {
         if (error) {
             return console.log(error);
         }
