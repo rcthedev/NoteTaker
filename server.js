@@ -3,9 +3,9 @@ const path = require("path");
 const fs = require("fs");
 // const dbJson = require("../db/db.json");
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
-const app = express();
+let app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
