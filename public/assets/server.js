@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const dbJson = require('./db/db.json');
+// const dbJson = require("../db/db.json");
 
 const PORT = 8080;
 
@@ -10,18 +10,18 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("public"));
+app.use(express.static("/public"));
 
 
 //  Create routes ////////////////////////////////////////////////////////////////////////////////////
 // To serve home page //
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "public/index.html"))
+    res.sendFile(path.join(__dirname + '/../index.html'))
 });
 
 // To serve notes page //
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, "public/notes.html"))
+    res.sendFile(path.join(__dirname + '/../notes.html'))
 });
 
 
