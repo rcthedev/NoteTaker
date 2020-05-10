@@ -10,30 +10,28 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("/public"));
-
+app.use(express.static("public"));
 
 //  Create routes ////////////////////////////////////////////////////////////////////////////////////
 // To serve home page //
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname + '/../index.html'))
+    res.sendFile(path.join(__dirname + '/public/index.html'))
 });
 
 // To serve notes page //
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname + '/../notes.html'))
+    res.sendFile(path.join(__dirname + '/public/notes.html'))
 });
-
 
 // Will respond to GET note request ///////////////////////////////////////////////////////////////////
 app.get("/api/notes", function (req, res) {
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), function (error, data) {
+    fs.readFile(path.join(__dirname + "/db/db.json"), function (error, data) {
         if (error) {
            return console.log(error);
         };
         jsonFile = JSON.parse(data);
-        res.send(jsonFile);
+        return res.json(jsonFile);
     })
 });
 
@@ -43,7 +41,7 @@ app.post("/api/notes", function (req, res) {
 
     let newNote = req.body;
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), function (error, data) {
+    fs.readFile(path.join(__dirname + "/db/db.json"), function (error, data) {
         if (error) {
             return console.log(error);
         };
@@ -68,7 +66,7 @@ app.post("/api/notes", function (req, res) {
 
 
         // Send information back to client /////////
-        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(allNotes), function (err) {
+        fs.writeFile(path.join(__dirname + "/db/db.json"), JSON.stringify(allNotes), function (err) {
             if (error) {
                 return console.log(err);
             };
@@ -84,7 +82,7 @@ app.post("/api/notes", function (req, res) {
 app.delete("/api/notes/:id", function (req, res) {
     let noteToDelete = req.params.id;
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), function (error, data) {
+    fs.readFile(path.join(__dirname + "/db/db.json"), function (error, data) {
         if (error) {
             return console.log(error);
         }
@@ -97,7 +95,7 @@ app.delete("/api/notes/:id", function (req, res) {
                 allNotes.splice(i, 1);
             }
         }
-        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(allNotes), function (err) {
+        fs.writeFile(path.join(__dirname + "/db/db.json"), JSON.stringify(allNotes), function (err) {
             if (error) {
                 return console.log(err);
             };
@@ -106,6 +104,8 @@ app.delete("/api/notes/:id", function (req, res) {
         })
     })
 });
+
+
 
 app.listen(PORT, () => {
     console.log("Listening on PORT 8080")
